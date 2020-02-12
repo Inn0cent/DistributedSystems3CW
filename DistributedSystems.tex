@@ -1,0 +1,126 @@
+\documentclass[11pt]{article}
+
+\title{\vspace{-2.5cm}Computational Methodologies: Distributed Computing}
+\author{bcng57}
+\date{}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[headheight=0pt, headsep=0pt, textheight = 20cm]{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+  
+\setlength{\parindent}{0pt}
+
+\renewcommand{\thesection}{Question \arabic{section}}
+
+\renewcommand{\thesubsection}{(\alph{subsection})}
+
+\definecolor{codegreen}{rgb}{0,0.5,0}
+\definecolor{codegray}{gray}{0.3}
+\definecolor{codered}{rgb}{0.7,0,0}
+\definecolor{backcolour}{rgb}{1, 1, 1}
+\definecolor{test}{HTML}{ffffff}
+
+\lstdefinestyle{distributed}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\em\color{codered},
+    keywordstyle=\color{codegreen},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    mathescape,
+    morekeywords={upon, if, then, else, from, send, to, terminate},
+    comment=[l]{//}
+}
+ 
+\lstset{style=distributed}
+
+\begin{document}
+
+\maketitle
+
+\section{}
+
+\subsection{}
+
+Code for each node. Initially, $asleep =$ \texttt{true} for all nodes. $in$ is the binary input, $n$ is the total number of nodes
+
+\begin{lstlisting}
+upon receiving no message :
+	if $asleep$ then
+		$asleep$ = false
+		send $\langle in, 0 \rangle$ to left
+
+upon receiving $\langle bit, count \rangle$ from right :
+	if $count$ == $n$:  // If visited nodes == total number of nodes, end
+		result = $bit$
+		terminate
+	else:
+		send $\langle bit\ \&\ in, count + 1 \rangle$ to left
+
+\end{lstlisting}
+
+
+\subsection{}
+
+Code for each node. Initially, $asleep =$ \texttt{true} for all nodes. $in$ is the binary input, $n$ is the total number of nodes.\\
+This algorithm has $\lfloor n/2 \rfloor$ rounds numbered $1,\dots,\lfloor n/2 \rfloor$.
+
+\begin{lstlisting}
+upon receiving no message :
+	if $in$ == 0 then
+		result = 0
+		send $\langle terminate \rangle$ to left and right
+		terminate
+	else if $asleep$ then
+		$asleep$ = false
+
+upon receiving $\langle terminate \rangle$ from left (resp., right):
+	result = 0
+	send $\langle terminate \rangle$ to right (resp., left)
+	terminate
+	
+if no messaged received by round $\lfloor n/2 \rfloor$:
+	result = 1
+	terminate
+
+\end{lstlisting}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
