@@ -120,6 +120,16 @@ Upon receiving a message of this form, a processor compares the counter to $n$.\
 \item If the counter is equal to $n$, then its original message has been passed around the ring, so it can set the result to the received bit and terminate
 \item If the counter is not equal to $n$, send a message to the left containing the received bit AND input bit, and the counter incremented by 1.
 \end{itemize}
+Each processor sends a message that must be forwarded to all $n$ of the processors in the ring. This means that in total $n^2$ messages are sent, so the message complexity is $O(n^2)$.\\
+
+\textbf{Possibly more formal version}
+
+Each processor $p_i$ sends a message $\langle b_i, c_i \rangle$ to the right with its input bit $b_i$ and a counter $c_i$ that starts at 0.\\
+Upon receiving a message $\langle b_{j-1}, c_{j-1} \rangle$, a processor $p_j$ compares the $c_{j-1}$ to $n$.\\
+\begin{itemize}
+\item If $c_{j-1}$ is equal to $n$, then its original message has been passed around the ring, so it can set the result to $b_{j-1}$ and terminate
+\item If $c_{j-1}$ is not equal to $n$, send a message $\langle b_{j-1} \text{ AND } b_j, c_{j-1} + 1 \rangle$ to the right.
+\end{itemize}
 Each processor sends a message that must be forwarded to all $n$ of the processors in the ring. This means that in total $n^2$ messages are sent, so the message complexity is $O(n^2)$.
 
 
