@@ -52,7 +52,7 @@
 
 \section{}
 
-Let $G=(V_G, E_G)$ be a connected topology graph with specified root $p_r\in V_G$. Let $D=\max\{dist(p_i,p_j)|p_i,p_j\in V_G\}$, be the diameter of the graph.
+Let $G=(V_G, E_G)$ be a connected topology graph with specified root $p_r\in V_G$. Let $D=\max\{dist(p_i,p_j)\ |\ p_i,p_j\in V_G\}$, be the diameter of the graph.
 
 \subsection{}
 
@@ -91,6 +91,12 @@ Therefore the overall time complexity is $O(D)$.
 
 \subsection{}
 
+We shall prove this by contradiction.
+First, assume that there is some uniform synchronous algorithm ,$A$, that correctly computes the AND of the input bits. 
+
+Run $A$ on a ring where all input bits are 1. In any round $i$, the states of all the processors are the same. Therefore, there must be some round $r$ where all the processors terminate.
+
+Now run $A$ on a ring with $2(r+1)$ processors, where processor $p_0$ has input bit 0 and the remaining processors have input bit 1. For $A$ to be correct some message originating from $p_0$ must reach all the nodes in the ring, however, it takes $r+1$ rounds for the message to reach processor $p_{r+1}$. As $p_{r+1}$ has initial bit 1, it will terminate in $r$ rounds with its result as 1. This is incorrect, so $A$ cannot be correct which is a contradiction. Therefore, a uniform synchronous algorithm for this problem does not exist. 
 
 
 \subsection{}
